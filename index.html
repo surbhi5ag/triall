@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>PSET7 D3 Visualization Webpage</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.1.1/d3.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,500" rel="stylesheet">
+		<style type="text/css">
+
+		.label_styling {
+			font-family:"Open Sans";
+			font-weight: 300;
+			font-size: 14px;
+		}
+		.title_styling {
+			font-family:"Open Sans";
+			font-weight: 500;
+			font-size: 18px;
+		}
+		.source_styling {
+			font-family:"Open Sans";
+			font-weight: 300;
+			font-size: 10px;
+		}
+
+		h1 {
+			font-family:"Open Sans";
+			font-size:50px;
+			font-weight:700;
+			line-height:1.3;
+		}
+		h2 {
+			font-family:"Open Sans";
+			font-size:18px;
+			font-weight:700;
+		}
+
+
+		</style>
+		</head>
+		<body>
+
+			<main role="main" class="container" >
+				 <div class="row">
+						<br><br>
+						<h1>Visualizing Agricultural Land</h1>
+
+						<hr>
+
+				 </div>
+				 <div class="row">
+					 <div class="col-5">
+						       <p id="text1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						       <br><br>
+									 <br>
+			 						<h2> Big Data, Visualization, and Society </h2>
+			 						<p> Course: <b>11.154/11.454</b> <br>
+			 						 		Assignment: <b>PSET7 - D3 Visualization Webpage</b> <br>
+			 								Author: <b>Deni Lopez</b> </p>
+			 		     	</div>
+
+
+	      	<div class="col-7">
+	 	         <div id="viz"></div>
+
+        </main>
+
+		<script type="text/javascript">
+            const agriculturedata = [
+                ["Brazil", 33.9],
+                ["Canada", 6.9],
+                ["Costa Rica", 34.5],
+                ["Denmark", 62],
+                ["Fiji", 23.3],
+                ["France", 52.4],
+                ["Greenland", .6],
+                ["Italy", 43.2],
+                ["Mali",33.8],
+                ["Netherlands",53.3]
+            ];
+
+			const width = 1200;
+			const height = 1000;
+			const marginLeft = 150;
+			const marginTop = 80;
+			const barHeight = 30;
+			const widthMultiplier = 6;
+			const gap = 5;
+
+            // define svg
+			const svg = d3.select("#viz")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+
+
+											// add rectangle bars
+											svg.append("g")
+													.attr("class", "rect-bars")
+											.selectAll("rect")
+													.data(agriculturedata)
+													.enter()
+													.append("rect")
+															.attr("y", (d, i) => i * (barHeight + gap) + marginTop)
+															.attr("x", marginLeft)
+															.attr("width", d => d[1] * widthMultiplier)
+															.attr("height", barHeight)
+															.attr("fill-opacity","0.7")
+															.attr("fill", "green");
+
+
+
+															// define title
+																	svg.append("g")
+																	.attr("class", "title_styling")
+																	.selectAll("text")
+																	.data(agriculturedata)
+																	.enter()
+																	.append("text")
+																	.attr("y", 60)
+																	.attr("x", marginLeft )
+																	.attr("text-anchor", "start")
+																	.text("Proportion of Agricultural Land in 2016")
+
+
+								             //define labels
+																	svg.append("g")
+																  .attr("class", "label_styling")
+																	.selectAll("text")
+																	.data(agriculturedata)
+																	.enter()
+																	.append("text")
+																	.attr("y", (d, i) => i * (barHeight + gap ) + gap +  marginTop + (barHeight/2))
+																	.attr("x", marginLeft - 10)
+																	.attr("text-anchor", "end")
+																  .text((d,i) => agriculturedata[i][0])
+
+
+															// define value
+																		svg.append("g")
+																	  .attr("class", "label_styling")
+																	  .selectAll("text")
+																		.data(agriculturedata)
+																		.enter()
+																		.append("text")
+																		.attr("y", (d, i) => i * (barHeight + gap ) + marginTop + gap + (barHeight/2))
+																		.attr("x", d => d[1] * widthMultiplier + marginLeft + 5)
+																		.attr("text-anchor", "start")
+																		.text((d,i) => agriculturedata[i][1] + "%")
+
+
+											// define source
+															svg.append("g")
+																	.attr("class", "source_styling")
+																			.selectAll("text")
+																			.data(agriculturedata)
+																			.enter()
+																			.append("text")
+																			.attr("y", 10 * (barHeight + gap) + marginTop +50)
+																			.attr("x", marginLeft )
+																			.attr("text-anchor", "end")
+																			.text("Data Source: World Bank")
+
+
+
+		</script>
+	</body>
+</html>
